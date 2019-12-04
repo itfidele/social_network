@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+    {% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href=" {% static 'css/bootstrap.min.css' %} ">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/ionicons.min.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}"/>
+    <link rel="stylesheet" href="{% static 'google-fonts/css0b81.css' %}"/>
+    <link rel="shortcut icon" href="{% static 'images/fav.png' %}" type="image/x-icon">
+    <title>
+        {% block title %}
+        {% endblock title %}
+    </title>
+</head>
+<body>
+    {% block heading %}
+    <header id="header">
+      <nav class="navbar navbar-default navbar-fixed-top menu">
+        <div class="container">
+
+          <!-- Brand and toggle get grouped for better mobile display -->
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="index-register.html"><img src="{% static 'images/logo.png' %}" alt="logo" /></a>
+          </div>
+
+          <!-- Collect the nav links, forms, and other content for toggling -->
+          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right main-menu">
+              <li class="dropdown"><a href="{% url 'register' %}">Sign up</a></li>
+              <li class="dropdown"><a href="{% url 'index' %}">Sign In</a></li>
+            </ul>
+          </div><!-- /.navbar-collapse -->
+        </div><!-- /.container -->
+      </nav>
+    </header>
+    {% endblock heading %}
+
+
+    {% block content %}
+    {% endblock content %}
+
+    {% block javascript %}
+        <script src="{% static 'js/jquery-3.1.1.min.js' %}"></script>
+        <script src="{% static 'js/bootstrap.min.js' %}"></script>
+        <script src="{% static 'js/jquery.appear.min.js' %}"></script>
+		<script src="{% static 'js/jquery.incremental-counter.js' %}"></script>
+        <script src="{% static 'js/script.js' %}"></script>
+    {% endblock javascript %}
+</body>
+</html>
