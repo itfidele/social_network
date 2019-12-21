@@ -58,9 +58,9 @@
                 <div class="tab-pane active" id="register">
                   <h3>Register Now !!!</h3>
                   <p class="text-muted">Be cool and join today. Meet millions</p>
-                  <p> {{ name }} </p>
+                  <p>  </p>
                   <!--Register Form-->
-                  <form name="registration_form" id='registration_form' class="form-inline" method="post">
+                  <form name="registration_form" id='registration_form' action="/register" class="form-inline" method="post">
                     {% csrf_token %}
                     <div class="row">
                       <div class="form-group col-xs-6">
@@ -70,6 +70,12 @@
                       <div class="form-group col-xs-6">
                         <label for="lastname" class="sr-only">Last Name</label>
                         {{ forms.lastname }}
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="form-group col-xs-12">
+                        <label for="email" class="sr-only">Username</label>
+                        {{ forms.username }}
                       </div>
                     </div>
                     <div class="row">

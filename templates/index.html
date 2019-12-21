@@ -2,13 +2,12 @@
 {% load static %}
 {% block content %}
 
-    <!--Header End-->
 
+    <!--Header End-->
     <!-- Top Banner
     ================================================= -->
 		<section id="banner">
 			<div class="container">
-
         <!-- Sign Up Form
         ================================================= -->
         <div class="sign-up-form">
@@ -18,15 +17,18 @@
 			<div class="form-wrapper">
 				<p class="signup-text">Signin to connect to our network</p>
 				<div class="text-danger" style="font-weight:bold;padding:5px;">Fill all fields correctly</div>
-				<form action="#">
+				<form action="/login" method="post" id="form-login">
+                    {% csrf_token %}
+                    {{ res }}
 					<fieldset class="form-group">
-						<input type="email" class="form-control" id="example-email" placeholder="Enter Username">
+						<input type="email" name="username" class="form-control" id="example-email" placeholder="Enter Username">
 					</fieldset>
 					<fieldset class="form-group">
-						<input type="password" class="form-control" id="example-password" placeholder="Enter a password">
+						<input type="password" name="password" class="form-control" id="example-password" placeholder="Enter a password">
 					</fieldset>
-				</form>
-				<button class="btn-secondary" onclick="location.href='{% url 'dashboard' %}'">Signin</button>
+
+				<button class="btn-secondary" type="submit" name="submit">Signin</button>
+                </form>
 			</div>
 			<a href="#">Already have an account?</a>
 			<img class="form-shadow" src="{% static 'images/bottom-shadow.png' %}" alt="" />
@@ -209,7 +211,7 @@
     <div id="spinner-wrapper">
       <div class="spinner"></div>
     </div>
-    
+
 
 
 {% endblock content %}
