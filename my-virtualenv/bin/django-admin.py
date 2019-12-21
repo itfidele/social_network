@@ -1,4 +1,4 @@
-#!/home/hacker/Desktop/Django/Django Project/Makas/my-virtualenv/bin/python3
+#!/home/hacker/Desktop/Django/Django Project/makas-django/my-virtualenv/bin/python
 from django.core import management
 
 if __name__ == "__main__":
