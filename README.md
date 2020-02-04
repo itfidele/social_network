@@ -1,2 +1,2 @@
-# makas-django
+# Fikido
 my-social network django
