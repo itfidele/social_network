@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect,HttpResponse
 from django.http import JsonResponse
 from .forms import User
 # Create your views here.
@@ -9,11 +9,7 @@ from .lib.funcTools import allIneed
 
 
 def index(request):
-    try:
-        if request.session['userid']:
-            return redirect('dashboard')
-    except KeyError:
-        return render(request, 'index.html')
+    HttpResponse("<h1>Welcome</h1>")
 
 
 def register(request):
