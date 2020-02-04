@@ -1,1 +1,1 @@
-web: gunicorn makasnetwork.wsgi --log-file -
+web: gunicorn makas.wsgi --log-file -
