@@ -1,1 +1,1 @@
-web: gunicorn fikido.wsgi --log-file -
+web: gunicorn makasnetwork.wsgi --log-file -
