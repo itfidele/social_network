@@ -5,7 +5,6 @@ from .forms import User
 from .models import Members, Posts, PostImages, Post
 from django.core.files.storage import FileSystemStorage
 import datetime
-from .lib.funcTools import allIneed
 
 
 def index(request):
