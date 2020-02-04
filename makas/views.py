@@ -8,7 +8,7 @@ import datetime
 
 
 def index(request):
-    HttpResponse("<h1>Welcome</h1>")
+    return HttpResponse("<h1>Welcome</h1>")
 
 
 def register(request):
