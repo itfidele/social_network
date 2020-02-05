@@ -1,5 +1,6 @@
 from django.shortcuts import render,HttpResponse
 from django.views.decorators.csrf import csrf_exempt
+import json
 from bs4 import BeautifulSoup
 # Create your views here.
 
