@@ -28,7 +28,7 @@ def webhook(request):
     # if timesLocation is not None:
     #data = timeScrap(timesLocation)
     if artistname is not None and musicname is not None:
-        data = link_lyrics(artistname, musicname)
+        data = lyrics_text(link_lyrics(artistname, musicname))
     result = {
         'fulfillmentText': data,
     }
