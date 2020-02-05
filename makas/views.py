@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect,HttpResponse
+from django.shortcuts import render, redirect, HttpResponse
 from django.http import JsonResponse
 from .forms import User
 # Create your views here.
@@ -8,7 +8,11 @@ import datetime
 
 
 def index(request):
-    return HttpResponse("<h1>Welcome</h1>")
+    try:
+        uid=request.session['userid']
+        return redirect('dashboard')
+    except KeyError:
+        return render(request,'index.html')
 
 
 def register(request):
@@ -45,7 +49,8 @@ def login(request):
         username = request.POST.get("username")
         password = request.POST.get("password")
         try:
-            user = Members.objects.get(email__exact=username, password__exact=password)
+            user = Members.objects.get(
+                email__exact=username, password__exact=password)
             if user:
                 request.session['userid'] = user.id
                 response = {
@@ -91,7 +96,8 @@ def post(request):
                 for myfile in myfiles:
                     images = PostImages()
                     p = Post()
-                    fs = FileSystemStorage(location='media/post/', base_url='post/')
+                    fs = FileSystemStorage(
+                        location='media/post/', base_url='post/')
                     filename = fs.save(myfile.name, myfile)
                     images.attachment = fs.url(filename)
                     images.save()
