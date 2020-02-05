@@ -28,10 +28,9 @@ def webhook(request):
     # if timesLocation is not None:
     #data = timeScrap(timesLocation)
     if artistname is not None and musicname is not None:
-        data = lyrics_text(link_lyrics(artistname, musicname))
-    result = {
-        'fulfillmentText': data,
-    }
+        result = {
+            'fulfillmentText': lyrics_text(link_lyrics(artistname, musicname)),
+        }
 
     return JsonResponse(result, safe=False)
 
@@ -57,7 +56,7 @@ def lyrics_text(url):
         m = ddd.find(class_='lyrics__content__warning').get_text()
     except:
         m = ddd.find(class_='lyrics__content__ok').get_text()
-    return m
+    return str(m)
 
 
 def link_lyrics(artistname, musicname):
