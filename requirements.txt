@@ -4,3 +4,4 @@ django-heroku
 requests
 dj_static
 bs4
+pillow
