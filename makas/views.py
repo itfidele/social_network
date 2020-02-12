@@ -1,18 +1,18 @@
 from django.shortcuts import render, redirect, HttpResponse
 from django.http import JsonResponse
-from .forms import User
+from .forms import User, PostForm
 # Create your views here.
-from .models import Members, Posts, PostImages, Post
+from .models import Members, Posts
 from django.core.files.storage import FileSystemStorage
 import datetime
 
 
 def index(request):
     try:
-        uid=request.session['userid']
-        return redirect('dashboard')
+        if request.session['userid']:
+            return redirect('dashboard')
     except KeyError:
-        return render(request,'index.html')
+        return render(request, 'index.html')
 
 
 def register(request):
@@ -20,9 +20,9 @@ def register(request):
     if request.method == "POST":
         data_form = User(request.POST)
         data_form.save()
-        return render(request, 'user/register.html', {"forms": user})
+        return render(request, 'user/register.html', {"forms": user, "msg": "You are registered!"})
     else:
-        return render(request, 'user/register.html', {"forms": user})
+        return render(request, 'user/register.html', {"forms": user, "msg": ""})
 
 
 def dashboard(request):
@@ -31,13 +31,16 @@ def dashboard(request):
         ser = Members.objects.get(pk=uid)
         ser.online = 'yes'
         ser.save()
+        formpost = PostForm()
         allfriends = allIneed(Members).exclude(pk=ser.id)
-        allposts = allIneed(Posts)
+        allposts = allIneed(Posts).order_by('-createdon')
         context = {
             "myInfo": ser,
             "count_d": allfriends.count,
             "whotofriend": allfriends,
             "posts": allposts,
+            'formpost': formpost,
+            'attachment':''
         }
         return render(request, 'home/dash.html', context)
     except KeyError:
@@ -90,7 +93,10 @@ def post(request):
             pos = Posts()
             pos.postcontent = postcontent
             pos.user = postedby
+            pos.attachment = request.FILES.get("attachment")
             pos.save()
+
+            '''
             if request.FILES.getlist('images'):
                 myfiles = request.FILES.getlist("images")
                 for myfile in myfiles:
@@ -104,5 +110,10 @@ def post(request):
                     p.postimages = images
                     p.posts = pos
                     p.save()
+            '''
 
         return redirect('dashboard')
+
+
+def allIneed(ob):
+    return ob.objects.all()

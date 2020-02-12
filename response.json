@@ -1,0 +1,44 @@
+{
+    "responseId": "a5d79e3d-ed65-47d4-abe2-333b7868f245-ce609cdc",
+    "queryResult": {
+      "queryText": "lyrics of ndagukunda by king james",
+      "parameters": {
+        "music-name": "ndagukunda",
+        "music-artist": "king james"
+      },
+      "allRequiredParamsPresent": true,
+      "fulfillmentText": "Sinzi igihe nsigaje ku isi\nSinzi umubare w'inyenyeri\nAriko hari ikintu kimwe nzi\nNeza ijana ku ijana\nNi uko ngukunda.yeeee\nWowe nzira igera ku munezero wanjye\nUmutima wanjye wawuhinduye\nIriba ry'akanyamuneza aaah yooo\nI Indoro yawe inkora aho ntanshyikira\n\nUmva Ndagukunda, Ndagukunda\nRimwe na rimwe mbura amagambo\nMbivugamo, nkumva naguhobera gusa\nNgatuza, Rukundo rwanjye, rubavu rwanjye ibyo ntukabishidikanyeho, Ndagukunda.\n\nIyo unkozeho numva umubiri usubijwe\nNkunda iyo useka ugaseka undeba\nBiryohera umutima wanjye\nNo mu bandi mba numva uri ishema ryanjye iyeee ni wowe mwambaro nambara nkaberwa(Nkaberwa)\nKuba kure yawe niyo ndwara yanzonga\nI inseko yawe inkora aho ntashyikira aaaah\n\nNdagukunda, Ndagukunda rimwe na rimwe mbura amagambo mbivugamo nkumva naguhobera gusa ngatuza\nRukundo rwanjye, rubavu rwanjye\nIbyo ntukabishidikanyeho(habe n'isegonda) kuko ndagukunda.\nIyeee rimwe na rimwe mbura amagambo mbivugamo, nkumva naguhobera gusa ngatuza, rukundo rwanjye, rubavu rwanjye\nIbyo ntukabishidikanyeho kuko Jye Ndagukunda.",
+      "fulfillmentMessages": [
+        {
+          "text": {
+            "text": [
+              "Sinzi igihe nsigaje ku isi\nSinzi umubare w'inyenyeri\nAriko hari ikintu kimwe nzi\nNeza ijana ku ijana\nNi uko ngukunda.yeeee\nWowe nzira igera ku munezero wanjye\nUmutima wanjye wawuhinduye\nIriba ry'akanyamuneza aaah yooo\nI Indoro yawe inkora aho ntanshyikira\n\nUmva Ndagukunda, Ndagukunda\nRimwe na rimwe mbura amagambo\nMbivugamo, nkumva naguhobera gusa\nNgatuza, Rukundo rwanjye, rubavu rwanjye ibyo ntukabishidikanyeho, Ndagukunda.\n\nIyo unkozeho numva umubiri usubijwe\nNkunda iyo useka ugaseka undeba\nBiryohera umutima wanjye\nNo mu bandi mba numva uri ishema ryanjye iyeee ni wowe mwambaro nambara nkaberwa(Nkaberwa)\nKuba kure yawe niyo ndwara yanzonga\nI inseko yawe inkora aho ntashyikira aaaah\n\nNdagukunda, Ndagukunda rimwe na rimwe mbura amagambo mbivugamo nkumva naguhobera gusa ngatuza\nRukundo rwanjye, rubavu rwanjye\nIbyo ntukabishidikanyeho(habe n'isegonda) kuko ndagukunda.\nIyeee rimwe na rimwe mbura amagambo mbivugamo, nkumva naguhobera gusa ngatuza, rukundo rwanjye, rubavu rwanjye\nIbyo ntukabishidikanyeho kuko Jye Ndagukunda."
+            ]
+          }
+        }
+      ],
+      "intent": {
+        "name": "projects/fikido-intemt/agent/intents/e24e0ee6-207d-418e-b814-be478e721bcf",
+        "displayName": "lyrics.finder"
+      },
+      "intentDetectionConfidence": 0.8333333,
+      "diagnosticInfo": {
+        "webhook_latency_ms": 3522
+      },
+      "languageCode": "en"
+    },
+    "webhookStatus": {
+      "message": "Webhook execution successful"
+    },
+    "outputAudio": "T2dnUwACAAAAAAAAAAAAAAAAAAAAAENewaEBE09wdXNIZWFkAQE4AcBdAAAAAABPZ2dTAAAAAAAAAAAAAAAAAAABAAAASsI48gEr... (The content is truncated. Click `COPY` for the original JSON.)",
+    "outputAudioConfig": {
+      "audioEncoding": "OUTPUT_AUDIO_ENCODING_OGG_OPUS",
+      "synthesizeSpeechConfig": {
+        "speakingRate": 1,
+        "pitch": 1,
+        "voice": {
+          "name": "en-US-Standard-E"
+        }
+      }
+    }
+  }

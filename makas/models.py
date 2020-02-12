@@ -1,10 +1,15 @@
 from django.db import models
 import datetime
+from django.utils import timezone
 from django.contrib import admin
 # Create your models here.
 
 
 class Members(models.Model):
+
+    def get_absolute_url(self):
+        return reverse("dashboard", args={'photo': self.photo})
+
     GENDER_CHOICE = [
         ("M", "Male"),
         ("F", "Female"),
@@ -24,36 +29,36 @@ class Members(models.Model):
     city = models.CharField(max_length=200)
     country = models.CharField(max_length=3, choices=COUNTRIES)
     online = models.CharField(max_length=3, default='no')
+    dateofbirth = models.DateField(blank=True, null=True)
+    photo = models.ImageField(
+        'Profile Picture', blank=True, upload_to='users/')
+    created = models.DateTimeField(blank=True, auto_now=True)
 
     def __str__(self):
-        return self.firstname
+        return self.firstname+" "+self.lastname
 
-
-class PostImages(models.Model):
-    attachment = models.FileField(upload_to='post/')
+    class Meta:
+        db_table = ''
+        managed = True
+        verbose_name = 'Member'
+        verbose_name_plural = 'Members'
 
 
 class Posts(models.Model):
     postcontent = models.TextField(blank=False)
     postviews = models.IntegerField(default=0)
-    posttime = models.TimeField(auto_created=datetime.time, default=datetime.time)
+    posttime = models.TimeField(
+        auto_created=datetime.time, default=datetime.time)
     user = models.ForeignKey(Members, on_delete=models.CASCADE)
-    images = models.ManyToManyField(PostImages)
+    attachment = models.ImageField(
+        'Post Attachment', blank=True, upload_to='post/')
+    createdon=models.DateTimeField(auto_now=True,blank=True)
 
-
-class Post(models.Model):
-    posts = models.ForeignKey(Posts, on_delete=models.CASCADE)
-    postimages = models.ForeignKey(PostImages, on_delete=models.CASCADE)
-
-
-class AllPosts(admin.TabularInline):
-    models = Post
-    extra = 1
-
-
-class AllPostImages(admin.ModelAdmin):
-    inline = (Post,)
-
-
-class AllPostsContent(admin.ModelAdmin):
-    inline = (Post,)
+    def __str__(self):
+        return self.postcontent
+    
+    class Meta:
+        db_table = ''
+        managed = True
+        verbose_name = 'Post'
+        verbose_name_plural = 'Posts'

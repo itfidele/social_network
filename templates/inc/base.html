@@ -13,10 +13,15 @@
     <link rel="shortcut icon" href="{% static 'images/fav.png' %}" type="image/x-icon">
     <title>
         {% block title %}
+          Makas | Social Network
         {% endblock title %}
     </title>
 </head>
 <body>
+   <!--preloader-->
+   <div id="spinner-wrapper">
+    <div class="spinner"></div>
+  </div>
     {% block heading %}
     <header id="header">
       <nav class="navbar navbar-default navbar-fixed-top menu">

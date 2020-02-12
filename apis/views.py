@@ -1,14 +1,60 @@
-from django.shortcuts import render,HttpResponse
+from django.shortcuts import render, HttpResponse
+import requests
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 import json
 from bs4 import BeautifulSoup
-import urllib
+from urllib.request import Request, urlopen
 # Create your views here.
 
+
 def index(request):
-    data = list()
-    return HttpResponse('<h1>Salam Bro</h1>')
+    res = htmlData("file:///home/hacker/Desktop/scrap/googleTime.html")
+    content = res.find_all(class_='rc')
+    response = dict()
+    li = list()
+    for cont in content:
+        if cont.find(class_='s').get_text() == "":
+            continue
+        li.append(
+            {
+                "title": cont.find('h3').get_text(),
+                "content": cont.find(class_='s').get_text(),
+            },
+        )
+    response['google'] = {
+        "expectUserResponse": True,
+        "richResponse": {
+            "items": li,
+        }
+    }
+    response['facebook'] = {
+        "text": "Hello, Facebook!"
+    }
+    response['slack'] = {
+        "text": "This is a text response for Slack."
+    }
+    response['telagram'] = {
+        "text": "This is a text response for Telagram."
+    }
+    response['skype'] = {
+        "text": "This is a text response for Skype."
+    }
+
+    return JsonResponse(response, safe=False)
+
+
+def htmlData(url):
+    try:
+        headers = {}
+        headers['User-Agent'] = "Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.17 (KHTML, like Gecko) Chrome/24.0.1312.27 Safari/537.17"
+        req = Request(url, headers=headers)
+        resp = urlopen(req)
+        respData = resp.read()
+        bs = BeautifulSoup(respData, 'html.parser')
+        return bs
+    except Exception as e:
+        return e
 
 
 def yego(request):
@@ -28,8 +74,11 @@ def webhook(request):
     # if timesLocation is not None:
     #data = timeScrap(timesLocation)
     if artistname is not None and musicname is not None:
+        # result = {
+        #    'fulfillmentText': lyrics_text(link_lyrics(artistname, musicname)),
+        # }
         result = {
-            'fulfillmentText': lyrics_text(link_lyrics(artistname, musicname)),
+            'fulfillmentText': ".",
         }
 
     return JsonResponse(result, safe=False)
