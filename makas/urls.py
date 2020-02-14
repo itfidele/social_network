@@ -9,5 +9,8 @@ urlpatterns = [
     path('logout', views.logout, name="logout"),
     path('login', views.login, name='login'),
     path('post', views.post, name='new_post'),
+    path('comment',views.comment,name='comment'),
+    path('refreshComment',views.refreshComment,name='refreshComment'),
+    path('postlike',views.refreshLike,name='postlike')
 ]
     

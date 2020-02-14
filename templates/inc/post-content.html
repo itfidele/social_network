@@ -1,0 +1,21 @@
+<form action="/post" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="create-post">
+      <div class="row">
+        <div class="col-md-7 col-sm-7">
+          <div class="form-group">
+            <img src="{{ myInfo.photo.url }}" alt="" class="profile-photo-md" />
+            {{ formpost.postcontent }}
+          </div>
+        </div>
+        <div class="col-md-5 col-sm-5">
+          <div class="tools">
+            <ul class="publishing-tools list-inline">
+              <li>{{ formpost.attachment }}</li>
+            </ul>
+            <button class="btn btn-primary pull-right">Publish</button>
+          </div>
+        </div>
+      </div>
+    </div>
+</form>

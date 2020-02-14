@@ -1,5 +1,7 @@
 {% extends '../inc/base.html' %}
 {% load static %}
+{% load custom_template_tags %}
+
 
 {% block title %}
 Makas | My Home
@@ -37,10 +39,9 @@ Makas | My Home
           <li><i class="icon ion-ios-videocam"></i>
             <div><a href="My-videos">Videos</a></div>
           </li>
-          <li><a href="#" onClick=""><img
-                class="icon" src='{% static "images/rtv_logo.png" %}' width="45"></a></li>
-          <li>&nbsp;<a href="#" onClick=""><img
-                class="icon" src='{% static "images/tv1_logo.png" %}' width="45"></a></li>
+          <li><a href="#" onClick=""><img class="icon" src='{% static "images/rtv_logo.png" %}' width="45"></a></li>
+          <li>&nbsp;<a href="#" onClick=""><img class="icon" src='{% static "images/tv1_logo.png" %}' width="45"></a>
+          </li>
           <li class="chat-sidebar-icon" onclick='openSidebar()'>&nbsp;<button class="btn btn-success btn-sm"
               name="button">Online</button> </li>
         </ul>
@@ -50,26 +51,7 @@ Makas | My Home
 
         <!-- Post Create Box
             ================================================= -->
-        <div class="create-post">
-          <form action="/post" method="post" enctype="multipart/form-data">
-            {% csrf_token %}
-            <div class="row">
-              <div class="col-md-7 col-sm-7">
-                <div class="form-inline">
-                  <img src="{{ myInfo.photo.url }}" alt="" class="profile-photo-md" />
-                  {{ formpost.postcontent }} {{ formpost.attachment }}
-                </div>
-              </div>
-              <div class="col-md-5 col-sm-5">
-                <div class="tools">
-                  <button class="btn btn-primary pull-right" type="submit" name="publish">Publish</button>
-                </div>
-              </div>
-            </div>
-          </form>
-
-
-        </div><!-- Post Create Box End -->
+        {% include "inc/post-content.html" with formpost=formpost %}
 
         <!-- Media
             ================================================= -->
@@ -81,26 +63,58 @@ Makas | My Home
 
               <div class="media-grid">
 
+
                 {% for post in posts %}
 
-                <div class="img-wrapper" data-toggle="modal" data-target=".modal-1">
-                  <img src="{{ post.attachment.url }}" alt="{{ post.attachment.url }}"
-                    class="img-responsive post-image" />
-                </div>
-                <div class="media-info">
-                  <div class="reaction">
-                    <a class="btn text-green"><i class="fa fa-thumbs-up"></i> 63</a>
-                    <a class="btn text-red"><i class="fa fa-thumbs-down"></i> 12</a>
-                  </div>
-                  <div class="user-info">
-                    <img src="{{ post.attachment.url }}" alt="" class="profile-photo-sm pull-left" />
-                    <div class="user">
-                      <h6><a href="#" class="profile-link"> {{ post.user.lastname }} </a></h6>
-                      <a class="text-green" href="#">Friend</a>
+                <div class="post-content">
+                  {% if post.attachment %}
+                  <img src="{{ post.attachment.url }}" alt="post-image" class="img-responsive post-image" />
+                  {% endif %}
+                  <div class="post-container">
+                    <img src="{{ post.user.photo.url }}" alt="user" class="profile-photo-md pull-left" />
+                    <div class="post-detail">
+                      <div class="user-info">
+                        <h5><a href="timeline.html" class="profile-link">{{ post.user.firstname }}
+                            {{ post.user.lastname }}</a> <span class="following">following</span></h5>
+                        <p class="text-muted">Published on {{ post.createdon }}</p>
+                      </div>
+                      <div class="reaction">
+                        <div class='lP form-inline'>
+                          {% include "inc/post_likes.html" with id=post.id %}
+                        </div>
+                        <!---
+                        <a class="btn text-blue"><i class="icon ion-settings"></i> 13</a>
+                        <a class="btn text-red"> 
+                          {% ifequal post.user.id myInfo.id %}
+                            <i class="fa fa-trash"></i>
+                          {% endifequal %} 
+                        </a>
+                        -->
+                        
+                      </div>
+                      <div class="line-divider"></div>
+                      <div class="post-text">
+                        <p> {{ post.postcontent }} </i></p>
+                      </div>
+                      <div class="line-divider"></div>
+
+                      <div id="comme">
+                        {% include "inc/post-comment.html" with comments=comments %}
+                      </div>
+
+                      <div class="post-comment">
+                        <img src="{{ myInfo.photo.url }}" alt="" class="profile-photo-sm" />
+                        <input type="text" class="form-control" post_='{{ post.id }}' id="comment"
+                          placeholder="Post a comment">
+                      </div>
+
                     </div>
                   </div>
                 </div>
+
                 {% endfor %}
+
+                {% include "inc/pagination.html" with page=posts %}
 
                 <!--Popup End-->
 

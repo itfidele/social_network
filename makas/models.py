@@ -44,6 +44,7 @@ class Members(models.Model):
         verbose_name_plural = 'Members'
 
 
+
 class Posts(models.Model):
     postcontent = models.TextField(blank=False)
     postviews = models.IntegerField(default=0)
@@ -62,3 +63,34 @@ class Posts(models.Model):
         managed = True
         verbose_name = 'Post'
         verbose_name_plural = 'Posts'
+
+
+class Comments(models.Model):
+    comment=models.TextField(blank=False)
+    user=models.ForeignKey(Members,on_delete=models.CASCADE)
+    createdon=models.DateTimeField(auto_now=True)
+    post=models.ForeignKey(Posts,on_delete=models.CASCADE,null=True)
+    
+    def __str__(self):
+        return self.comment
+
+    class Meta:
+        db_table = ''
+        managed = True
+        verbose_name = 'Comment'
+        verbose_name_plural = 'Comments'
+
+class PostLikes(models.Model):
+    like=models.IntegerField()
+    user=models.ForeignKey(Members,on_delete=models.CASCADE)
+    createdon=models.DateTimeField(auto_now=True)
+    post=models.ForeignKey(Posts,on_delete=models.CASCADE,null=True)
+    
+    def __str__(self):
+        return self.user.username
+
+    class Meta:
+        db_table = ''
+        managed = True
+        verbose_name = 'PostLike'
+        verbose_name_plural = 'PostLikes'

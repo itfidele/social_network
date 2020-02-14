@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Members, Posts
+from .models import Members, Posts,Comments,PostLikes
 
 # Register your models here.
 @admin.register(Posts)
@@ -17,4 +17,11 @@ class MemberAdmin(admin.ModelAdmin):
     search_fields = ('username', 'email', 'firstname', 'lastname')
     date_hierarchy = 'created'
 
+@admin.register(Comments)
+class CommentsAdmin(admin.ModelAdmin):
+    list_display = ['comment', 'user']
+    list_filter = ['user']
+    search_fields = ('comment', 'user', 'post')
+    date_hierarchy = 'createdon'
 
+admin.site.register(PostLikes)

@@ -501,7 +501,7 @@ textarea{
   background-position: center;
 	background-size: cover;
 	width: 100%;
-	min-height: 650px;
+	min-height: 600px;
 	position: relative;
 	top: 0;
 }

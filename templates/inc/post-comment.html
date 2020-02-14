@@ -1,0 +1,14 @@
+{% for comment in comments %}
+{% ifequal comment.post.id post.id %}
+<div class="post-comment">
+    <img src="{{ comment.user.photo.url }}" alt="" class="profile-photo-sm" />
+    <p>
+        <a href="timeline.html" class="profile-link"> {{ comment.user.username }} </a><br>
+        {{ comment.comment }} <i class="icon ion-trash"></i>
+    </p>
+</div>
+<hr>
+{% endifequal %}
+{% empty %}
+Not commment yet
+{% endfor %}

@@ -1,80 +1,152 @@
 <!DOCTYPE html>
 <html lang="en">
-    {% load static %}
+{% load static %}
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href=" {% static 'css/bootstrap.min.css' %} ">
-    <link rel="stylesheet" href="{% static 'css/style.css' %}"/>
-    <link rel="stylesheet" href="{% static 'css/ionicons.min.css' %}"/>
-    <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}"/>
-    <link rel="stylesheet" href="{% static 'google-fonts/css0b81.css' %}"/>
-    <link rel="shortcut icon" href="{% static 'images/fav.png' %}" type="image/x-icon">
-    <title>
-        {% block title %}
-          Makas | Social Network
-        {% endblock title %}
-    </title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href=" {% static 'css/bootstrap.min.css' %} ">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+  <link rel="stylesheet" href="{% static 'css/ionicons.min.css' %}" />
+  <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}" />
+  <link rel="stylesheet" href="{% static 'google-fonts/css0b81.css' %}" />
+  <link rel="shortcut icon" href="{% static 'images/fav.png' %}" type="image/x-icon">
+  <title>
+    {% block title %}
+    Makas | Social Network
+    {% endblock title %}
+  </title>
 </head>
+
 <body>
-   <!--preloader-->
-   <div id="spinner-wrapper">
+  <!--preloader-->
+  <div id="spinner-wrapper">
     <div class="spinner"></div>
   </div>
-    {% block heading %}
-    <header id="header">
-      <nav class="navbar navbar-default navbar-fixed-top menu">
-        <div class="container">
+  {% block heading %}
+  <header id="header">
+    <nav class="navbar navbar-default navbar-fixed-top menu">
+      <div class="container">
 
-          <!-- Brand and toggle get grouped for better mobile display -->
-          <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-              <span class="sr-only">Toggle navigation</span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="index-register.html"><img src="{% static 'images/logo.png' %}" alt="logo" /></a>
-          </div>
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+            data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="index-register.html"><img src="{% static 'images/logo.png' %}" alt="logo" /></a>
+        </div>
 
-          <!-- Collect the nav links, forms, and other content for toggling -->
-          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav navbar-right main-menu">
-              <li class="dropdown"><a href="{% url 'register' %}">Sign up</a></li>
-              <li class="dropdown"><a href="{% url 'index' %}">Sign In</a></li>
-            </ul>
-          </div><!-- /.navbar-collapse -->
-        </div><!-- /.container -->
-      </nav>
-    </header>
-    {% endblock heading %}
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav navbar-right main-menu">
+            <li class="dropdown"><a href="{% url 'register' %}">Sign up</a></li>
+            <li class="dropdown"><a href="{% url 'index' %}">Sign In</a></li>
+          </ul>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container -->
+    </nav>
+  </header>
+  {% endblock heading %}
 
 
-    {% block content %}
-    {% endblock content %}
+  {% block content %}
+  {% endblock content %}
 
-    {% block javascript %}
-        <script src="{% static 'js/jquery-3.1.1.min.js' %}"></script>
-        <script src="{% static 'js/bootstrap.min.js' %}"></script>
-        <script type="text/javascript">
-            $("#form-login").submit(function(e){
-                var formm=$("#form-login").serialize();
-                e.preventDefault();
-               $.ajax({
-                   url:"/login",
-                   type:"post",
-                   data:formm,
-                   success:function (data) {
-                        alert(data.message);
-                        location.href=data.url
-                   }
-               })
-            });
-        </script>
-        <script src="{% static 'js/jquery.appear.min.js' %}"></script>
-		<script src="{% static 'js/jquery.incremental-counter.js' %}"></script>
-        <script src="{% static 'js/script.js' %}"></script>
-    {% endblock javascript %}
+  {% block javascript %}
+  <script src="{% static 'js/jquery-3.1.1.min.js' %}"></script>
+  <script>
+    $("#comment").keyup(function (e) { 
+
+      if(e.keyCode==13){
+        var comment=$(this).val();
+        var po=$(this).attr('post_');
+        $.ajax({
+          type: "POST",
+          url: "/comment",
+          data: "comment="+comment+"&post_="+po,
+          success: function (response) {
+            $("#comme").load('refreshComment?id='+po);
+            $("#comment").val('');
+          }
+        });
+      }
+
+    });
+
+    $("#like").click(function (e) { 
+      var postlike=$(this).attr('post_');
+      $.ajax({
+        type: "POST",
+        url: "/postlike",
+        data: "id="+postlike,
+        success: function (response) {
+          $(".lP").load('postlike?id='+postlike);
+        }
+      });
+    });
+
+    $(document).ready(function () {
+      $(window).scroll(function () {
+
+        var position = $(window).scrollTop();
+
+        var bottom = $(document).height() - $(window).height();
+        //var row = Number($('#row').val());
+        //var allcount = Number($('#all').val());
+        //var post_num=$("#NextPost").val();
+        //var rowperpage = 1;
+        //row = row + rowperpage;
+        //&& row<=allcount
+        if (position == bottom) {
+          //alert(position);
+          /*
+                  var home='<?php echo $_SESSION['user_id']; ?>';
+                      $('#row').attr('value',row);
+                      $.ajax({
+                          url: 'class_module/autoscroll.php',
+                          type: 'post',
+                          data: {row:row,home:home,post_num:post_num},
+                          beforeSend:function(){
+                            $("#loadMore").html("Continue Scrolling For more ");
+                          },
+                          success: function(response){
+          
+                              $("#me").html("");
+                              $(".post-content").append(response).show().fadeIn("slow");
+          
+                          }
+                      });
+                */
+        }
+      });
+
+    });
+  </script>
+  <script src="{% static 'js/bootstrap.min.js' %}"></script>
+  <script type="text/javascript">
+    $("#form-login").submit(function (e) {
+      var formm = $("#form-login").serialize();
+      e.preventDefault();
+      $.ajax({
+        url: "{% url 'login' %}",
+        type: "post",
+        data: formm,
+        success: function (data) {
+          location.href = data.url
+        }
+      })
+    });
+  </script>
+
+  <script src="{% static 'js/jquery.appear.min.js' %}"></script>
+  <script src="{% static 'js/jquery.incremental-counter.js' %}"></script>
+  <script src="{% static 'js/script.js' %}"></script>
+  {% endblock javascript %}
 </body>
+
 </html>

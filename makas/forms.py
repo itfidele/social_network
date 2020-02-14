@@ -1,6 +1,6 @@
 from django import forms
-from .models import Members, Posts
-
+from .models import Members, Posts,Comments
+from .widgets import BootstrapDateTimePickerInput
 
 class User(forms.ModelForm):
     class Meta:
@@ -39,3 +39,25 @@ class PostForm(forms.ModelForm):
     class Meta:
         model=Posts
         fields=('attachment','postcontent')
+        widgets = {
+            'postcontent': forms.Textarea(
+                attrs={
+                    'class':'form-control',
+                    'rows':2,
+                    'style':'border:2px solid skyblue;padding:10px;border-radius:10px;box-shadow:inset 5px 0px 10px 0px skyblue;',
+                    'placeholder':'write your wish here...',
+                }
+            ),
+        }
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model=Comments
+        fields=['comment']
+        widgets={
+            'comment':forms.Textarea(
+                attrs={
+                    'class':'form-control',
+                }
+            )
+        }
