@@ -21,7 +21,12 @@ Makas | My Home
           ================================================= -->
       <div class="col-md-3 static">
         <div class="profile-card">
-          <img src="{{ myInfo.photo.url }}" alt="user" class="profile-photo" />
+          {% if myInfo.photo.strip %}
+            <img src="{{ myInfo.photo.url }}" alt="user" class="profile-photo" />
+          {% else %}
+            <img src="{% static 'images/male.jpg' %}" alt="user" class="profile-photo" />
+          {% endif %}
+          
           <h5><a href="timeline.html" class="text-white">{{ myInfo.username|capfirst }}</a></h5>
           <a href="#" class="text-white"><i class="ion ion-android-person-add"></i> {{ count_d }} followers</a>
         </div>
@@ -71,7 +76,12 @@ Makas | My Home
                   <img src="{{ post.attachment.url }}" alt="post-image" class="img-responsive post-image" />
                   {% endif %}
                   <div class="post-container">
-                    <img src="{{ post.user.photo.url }}" alt="user" class="profile-photo-md pull-left" />
+                    {% if post.user.photo.strip %}
+                      <img src="{{ post.user.photo.url }}" alt="user" class="profile-photo-md pull-left" />
+                    {% else %}
+                      <img src="{% static 'images/male.jpg' %}" alt="user" class="profile-photo-md pull-left" />
+                    {% endif %}
+
                     <div class="post-detail">
                       <div class="user-info">
                         <h5><a href="timeline.html" class="profile-link">{{ post.user.firstname }}
@@ -103,7 +113,11 @@ Makas | My Home
                       </div>
 
                       <div class="post-comment">
-                        <img src="{{ myInfo.photo.url }}" alt="" class="profile-photo-sm" />
+                        {% if myInfo.photo.strip %}
+                          <img src="{{ myInfo.photo.url }}" alt="user" class="profile-photo-md pull-left" />
+                        {% else %}
+                          <img src="{% static 'images/male.jpg' %}" alt="user" class="profile-photo-md pull-left" />
+                        {% endif %}
                         <input type="text" class="form-control" post_='{{ post.id }}' id="comment"
                           placeholder="Post a comment">
                       </div>

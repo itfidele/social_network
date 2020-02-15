@@ -42,6 +42,8 @@ class Members(models.Model):
         managed = True
         verbose_name = 'Member'
         verbose_name_plural = 'Members'
+    
+    
 
 
 
