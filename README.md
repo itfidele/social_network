@@ -1,4 +1,4 @@
 # Fikido
-my-social network django
+Access web Here 
 visit web here 
-https://fikido.herokuapp.com
+# https://fikido.herokuapp.com
