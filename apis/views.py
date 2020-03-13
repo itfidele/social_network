@@ -8,6 +8,8 @@ from urllib.request import Request, urlopen
 # Create your views here.
 
 
+
+
 def index(request):
     res = htmlData("file:///home/hacker/Desktop/scrap/googleTime.html")
     content = res.find_all(class_='rc')

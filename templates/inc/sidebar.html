@@ -1,0 +1,40 @@
+{% load static %}
+<!-- Newsfeed Common Side Bar Left
+          ================================================= -->
+<div class="col-md-3 static">
+    <div class="profile-card">
+        {% if myInfo.photo_available %}
+        <img src="{{ myInfo.photo.url }}" alt="user" class="profile-photo" />
+        {% else %}
+        <img src="{% static 'images/male.jpg' %}" alt="user" class="profile-photo" />
+        {% endif %}
+
+        <h5><a href=" {% url 'settings' %} " class="text-white">{{ myInfo.username|capfirst }}</a></h5>
+        <a href="#" class="text-white"><i class="ion ion-android-person-add"></i> {{ myInfo.friends.count }} Friennds</a>
+    </div>
+    <!--profile card ends-->
+    <ul class="nav-news-feed">
+        <li><i class="icon ion-ios-paper"></i>
+            <div><a href=" {% url 'dashboard' %} ">My Newsfeed</a></div>
+        </li>
+        <li><i class="icon ion-ios-people-outline"></i>
+            <div><a href=" {% url 'friends' %} ">Friends</a></div>
+        </li>
+        <li><i class="icon ion-images"></i>
+            <div><a href=" {% url 'album' %} ">Images</a></div>
+        </li>
+        <li>
+            <i class="icon ion-chatboxes"></i>
+            <div><a href="">Messages</a></div>
+        </li>
+        <li><i class="icon ion-ios-videocam"></i>
+            <div><a href="My-videos">Videos</a></div>
+        </li>
+        <li><a href="#" onClick=""><img class="icon" src='{% static "images/rtv_logo.png" %}' width="45"></a></li>
+        <li>&nbsp;<a href="#" onClick=""><img class="icon" src='{% static "images/tv1_logo.png" %}' width="45"></a>
+        </li>
+        <li class="chat-sidebar-icon" onclick='openSidebar()'>&nbsp;<button class="btn btn-success btn-sm"
+                name="button">Online</button> </li>
+    </ul>
+    <!--chat block ends-->
+</div>

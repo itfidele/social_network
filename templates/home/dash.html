@@ -3,12 +3,16 @@
 {% load custom_template_tags %}
 
 
+{% block ay %}
+  weeeee
+{% endblock ay %}
+
 {% block title %}
 Makas | My Home
 {% endblock %}
 
 {% block heading %}
-{% include "inc/header-menu.html" %}
+  {% include "inc/header-menu.html" %}
 {% endblock heading %}
 
 {% block content %}
@@ -17,41 +21,7 @@ Makas | My Home
   <div class="container">
     <div class="row">
 
-      <!-- Newsfeed Common Side Bar Left
-          ================================================= -->
-      <div class="col-md-3 static">
-        <div class="profile-card">
-          {% if myInfo.photo.strip %}
-            <img src="{{ myInfo.photo.url }}" alt="user" class="profile-photo" />
-          {% else %}
-            <img src="{% static 'images/male.jpg' %}" alt="user" class="profile-photo" />
-          {% endif %}
-          
-          <h5><a href="timeline.html" class="text-white">{{ myInfo.username|capfirst }}</a></h5>
-          <a href="#" class="text-white"><i class="ion ion-android-person-add"></i> {{ count_d }} followers</a>
-        </div>
-        <!--profile card ends-->
-        <ul class="nav-news-feed">
-          <li><i class="icon ion-ios-paper"></i>
-            <div><a href="home">My Newsfeed</a></div>
-          </li>
-          <li><i class="icon ion-ios-people-outline"></i>
-            <div><a href="home-friend">Friends</a></div>
-          </li>
-          <li><i class="icon ion-images"></i>
-            <div><a href="My-album">Images</a></div>
-          </li>
-          <li><i class="icon ion-ios-videocam"></i>
-            <div><a href="My-videos">Videos</a></div>
-          </li>
-          <li><a href="#" onClick=""><img class="icon" src='{% static "images/rtv_logo.png" %}' width="45"></a></li>
-          <li>&nbsp;<a href="#" onClick=""><img class="icon" src='{% static "images/tv1_logo.png" %}' width="45"></a>
-          </li>
-          <li class="chat-sidebar-icon" onclick='openSidebar()'>&nbsp;<button class="btn btn-success btn-sm"
-              name="button">Online</button> </li>
-        </ul>
-        <!--chat block ends-->
-      </div>
+      {% include "inc/sidebar.html" with myInfo=myInfo %}
       <div class="col-md-7">
 
         <!-- Post Create Box
@@ -70,59 +40,53 @@ Makas | My Home
 
 
                 {% for post in posts %}
+                
 
                 <div class="post-content">
-                  {% if post.attachment %}
-                  <img src="{{ post.attachment.url }}" alt="post-image" class="img-responsive post-image" />
-                  {% endif %}
+
                   <div class="post-container">
-                    {% if post.user.photo.strip %}
+                    {% if post.user.photo_available %}
                       <img src="{{ post.user.photo.url }}" alt="user" class="profile-photo-md pull-left" />
                     {% else %}
                       <img src="{% static 'images/male.jpg' %}" alt="user" class="profile-photo-md pull-left" />
                     {% endif %}
-
                     <div class="post-detail">
                       <div class="user-info">
-                        <h5><a href="timeline.html" class="profile-link">{{ post.user.firstname }}
-                            {{ post.user.lastname }}</a> <span class="following">following</span></h5>
-                        <p class="text-muted">Published on {{ post.createdon }}</p>
+                        <h5><a href="timeline.html" class="profile-link">{{ post.user.fullname }}</a> <span class="following">following</span></h5>
+                        <p class="text-muted">Published {{ post.createdon|timesince }} Ago</p>
                       </div>
                       <div class="reaction">
                         <div class='lP form-inline'>
-                          {% include "inc/post_likes.html" with id=post.id %}
+                          <a class="btn text-green" id="like" post_='{{ post.id }}'><i class="icon ion-thumbsup"></i>{{ post.likes.count }}</a>
                         </div>
-                        <!---
-                        <a class="btn text-blue"><i class="icon ion-settings"></i> 13</a>
-                        <a class="btn text-red"> 
-                          {% ifequal post.user.id myInfo.id %}
-                            <i class="fa fa-trash"></i>
-                          {% endifequal %} 
-                        </a>
-                        -->
-                        
                       </div>
-                      <div class="line-divider"></div>
                       <div class="post-text">
                         <p> {{ post.postcontent }} </i></p>
                       </div>
-                      <div class="line-divider"></div>
+                    </div>
+                  </div>
+                  
+                  {% if post.attachment_available %}
+                  <img src="{{ post.attachment.url }}" alt="post-image" class="img-responsive post-image" />
+                  {% endif %}
+                  <div class="post-container">
 
+                    <div class='post-detail'>
                       <div id="comme">
                         {% include "inc/post-comment.html" with comments=comments %}
                       </div>
 
                       <div class="post-comment">
-                        {% if myInfo.photo.strip %}
-                          <img src="{{ myInfo.photo.url }}" alt="user" class="profile-photo-md pull-left" />
+                        {% if myInfo.photo_available %}
+                          <img src="{{ myInfo.photo.url }}" alt="user" class="profile-photo-sm pull-left" />
                         {% else %}
-                          <img src="{% static 'images/male.jpg' %}" alt="user" class="profile-photo-md pull-left" />
+                          <img src="{% static 'images/male.jpg' %}" alt="user" class="profile-photo-sm pull-left" />
                         {% endif %}
                         <input type="text" class="form-control" post_='{{ post.id }}' id="comment"
                           placeholder="Post a comment">
                       </div>
-
                     </div>
+
                   </div>
                 </div>
 
@@ -144,14 +108,28 @@ Makas | My Home
       <div class="col-md-2 static">
         <div class="suggestions" id="sticky-sidebar">
           <h4 class="grey">Who to Follow</h4>
+
+
+
           {% for friendfind in whotofriend %}
-          <div class="follow-user">
-            <img src="{{ friendfind.photo.url }}" alt="" class="profile-photo-sm pull-left" />
-            <div>
-              <h5><a href="timeline.html">{{ friendfind.firstname }}</a></h5>
-              <a href="#" class="text-green">Add friend</a>
+
+            {% if friendfind not in myInfo.friends.all %}
+            <div class="follow-user">
+            
+              {% if friendfind.photo_available %}
+                <img src="{{ friendfind.photo.url }}" alt="" class="profile-photo-sm pull-left" />
+              {% else %}
+                <img src=" {% static 'images/male.jpg' %} " alt="" class="profile-photo-sm pull-left" />
+              {% endif %}
+              
+              <div>
+                <h5><a href="timeline.html">{{ friendfind.fullname }} </a></h5>
+                <a href="#" add_this="{{ friendfind.id }}" class="addfriend text-green">Add friend</a>
+              </div>
             </div>
-          </div>
+            {% endif %}
+
+          
           {% endfor %}
         </div>
       </div>

@@ -12,7 +12,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="home"><img src=" {% static 'images/logo.png' %} " alt="logo" /></a>
+                <a class="navbar-brand" href=" {% url 'dashboard' %} "><img src=" {% static 'images/logo.png' %} " alt="logo" /></a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -25,16 +25,27 @@
                             aria-haspopup="true" aria-expanded="false"><i class='icon ion-ios-people-outline'></i>
                             Friend&nbsp;<span class='badge'
                                 style="width:auto;background-color:red;color:white;">
-                                <font size='1'>
-                                    <span id='nftc'>1</span>
-                                </font>
+                                    <span id='nftc'> {{ myInfo.friend_to_confirm_count }} </span>
                             </span></a>
                         <ul class="dropdown-menu newsfeed-home">
-                            <li>
+                            <li style="padding: 5px;">
                                 <table style="width:220px;">
-                                    <div class="friendto">
-
-                                    </div>
+                                    {% for to_confirm in myInfo.friend_to_confirm %}
+                                        <tr>
+                                            <div class="follow-user">
+                                                {% if  to_confirm.friend_from.photo_available %}
+                                                    <img src="{{ friendfind.photo.url }}" alt="" class="profile-photo-sm pull-left" />
+                                                {% else %}
+                                                    <img src=" {% static 'images/male.jpg' %} " alt="" class="profile-photo-sm pull-left" />
+                                                {% endif %}
+                                                
+                                                <div>
+                                                    <h5><a href="timeline.html">{{ to_confirm.friend_from.fullname }}</a></h5>
+                                                    <a href="#" confirm_friend_this="{{ to_confirm.id }}" class="text-green confirm_friend" style="color: green;">Confirm</a> | <a href="#" add_this="{{ to_confirm.friend_from.id }}" class="text-red" style="color: red;">Delete Request</a>
+                                                </div>
+                                            </div>
+                                        </tr>
+                                    {% endfor %}
                                 </table>
                             </li>
 

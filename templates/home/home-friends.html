@@ -1,0 +1,106 @@
+{% extends "../inc/base.html" %}
+{% load static %}
+{% block title %}
+Makas | My Friends
+{% endblock %}
+
+{% block heading %}
+{% include "inc/header-menu.html" %}
+{% endblock heading %}
+
+
+{% block content %}
+
+<div id="page-contents">
+    <div class="container">
+        <div class="row">
+
+            {% include "inc/sidebar.html" with myInfo=myInfo %}
+        
+        <div class="col-md-7">
+
+        <!-- Post Create Box
+        ================================================= -->
+        {% include "inc/post-content.html" with formpost=formpost %}
+        <!-- Post Create Box End -->
+
+        <!-- Media
+        ================================================= -->
+        <div class="media">
+            <div class="row js-masonry" data-masonry='{ "itemSelector": ".grid-item", "columnWidth": ".grid-sizer", "percentPosition": true }'>
+            
+
+            {% for friend in myInfo.friends.all  %}
+
+                <div class="grid-item col-md-6 col-sm-6">
+                  <div class="media-grid">
+                    <div class="media-info">
+                      <div class="user-info">
+                        {% if friend.photo.is_available %}
+                          <img src="{{ friend.photo.url }}" alt="" class="profile-photo-sm pull-left" />
+                        {% else %}
+                          <img src=" {% static 'images/male.jpg' %} " alt="" class="profile-photo-sm pull-left" />
+                        {% endif %}
+
+                        
+                        <div class="user">
+                          <h6><a href="#" class="profile-link"> {{ friend.fullname }} </a> <span class='pull-right icon ion-chatboxes' style="cursor:pointer;"></span> </h6>
+                          <a class="text-green" href="#">Friend</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+            {% endfor %}
+            </div>
+        </div>
+      </div>
+
+            <!-- Newsfeed Common Side Bar Right
+      ================================================= -->
+            <div class="col-md-2 static">
+        <div class="suggestions" id="sticky-sidebar">
+          <h4 class="grey">Who to Follow</h4>
+          <div class="follow-user">
+            <img src="images/users/user-11.jpg" alt="" class="profile-photo-sm pull-left" />
+            <div>
+              <h5><a href="timeline.html">Diana Amber</a></h5>
+              <a href="#" class="text-green">Add friend</a>
+            </div>
+          </div>
+          <div class="follow-user">
+            <img src="images/users/user-12.jpg" alt="" class="profile-photo-sm pull-left" />
+            <div>
+              <h5><a href="timeline.html">Cris Haris</a></h5>
+              <a href="#" class="text-green">Add friend</a>
+            </div>
+          </div>
+          <div class="follow-user">
+            <img src="images/users/user-13.jpg" alt="" class="profile-photo-sm pull-left" />
+            <div>
+              <h5><a href="timeline.html">Brian Walton</a></h5>
+              <a href="#" class="text-green">Add friend</a>
+            </div>
+          </div>
+          <div class="follow-user">
+            <img src="images/users/user-14.jpg" alt="" class="profile-photo-sm pull-left" />
+            <div>
+              <h5><a href="timeline.html">Olivia Steward</a></h5>
+              <a href="#" class="text-green">Add friend</a>
+            </div>
+          </div>
+          <div class="follow-user">
+            <img src="images/users/user-15.jpg" alt="" class="profile-photo-sm pull-left" />
+            <div>
+              <h5><a href="timeline.html">Sophia Page</a></h5>
+              <a href="#" class="text-green">Add friend</a>
+            </div>
+          </div>
+        </div>
+      </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

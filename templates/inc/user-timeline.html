@@ -1,0 +1,27 @@
+{% extends "inc/base.html" %}
+
+{% block heading %}
+  {% include "inc/header-menu.html" %}
+{% endblock heading %}
+
+{% block content %}
+<div class="container">
+
+    <!-- Timeline
+    ================================================= -->
+    <div class="timeline">
+      <div class="timeline-cover">
+
+        <!--Timeline Menu for Large Screens-->
+        {% include "inc/timeline-menu.html" with myInfo=myInfo %}
+
+      
+
+      {% block timeline-content %}
+      
+      {% endblock timeline-content %}
+
+
+    </div>
+  </div>
+{% endblock content %}

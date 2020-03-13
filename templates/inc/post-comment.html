@@ -2,14 +2,14 @@
 {% for comment in comments %}
 {% ifequal comment.post.id post.id %}
 <div class="post-comment">
-    {% if comment.user.photo.strip %}
+    {% if comment.user.photo.url.strip %}
         <img src="{{ comment.user.photo.url }}" alt="user" class="profile-photo" />
     {% else %}
         <img src="{% static 'images/male.jpg' %}" alt="user" class="profile-photo" />
     {% endif %}
 
     <p>
-        <a href="timeline.html" class="profile-link"> {{ comment.user.username }} </a><br>
+        <a href="timeline.html" class="profile-link"> {{ comment.user.fullname }} </a><br>
         {{ comment.comment }} <i class="icon ion-trash"></i>
     </p>
 </div>

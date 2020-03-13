@@ -1,0 +1,31 @@
+{% extends "admin/base.html" %}
+
+{% block title %}{{ title }} | {{ site_title|default:_('Django site admin') }}{% endblock %}
+
+{% block extrastyle %}
+    <style>
+        #header{
+            background-color: rgb(115, 161, 230);
+            color:wheat;
+        }
+        #footer{
+            background-color: rgb(115, 161, 230);
+            padding: 10px;
+            font-weight: bold;
+            text-align: center;
+        }
+    </style>
+{% endblock %}
+
+{% block branding %}
+<h1 id="site-name"><a href="{% url 'admin:index' %}">{{ site_header|default:_('Django administration') }}</a></h1>
+{% endblock %}
+
+{% block nav-global %}{% endblock %}
+
+
+{% block footer %}
+  <div id="footer">
+    Makas Administrator Login &copy; 2020
+  </div>
+{% endblock footer %}

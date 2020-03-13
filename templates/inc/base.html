@@ -12,18 +12,18 @@
   <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}" />
   <link rel="stylesheet" href="{% static 'google-fonts/css0b81.css' %}" />
   <link rel="shortcut icon" href="{% static 'images/fav.png' %}" type="image/x-icon">
+  <link href=" {% static 'css/mmc-chat.css' %} " rel="stylesheet" />
+  <meta title=" {% block ay %} {% endblock ay %} " >
   <title>
     {% block title %}
-    Makas | Social Network
+      Makas | Social Network
     {% endblock title %}
   </title>
 </head>
 
 <body>
   <!--preloader-->
-  <div id="spinner-wrapper">
-    <div class="spinner"></div>
-  </div>
+  
   {% block heading %}
   <header id="header">
     <nav class="navbar navbar-default navbar-fixed-top menu">
@@ -38,7 +38,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="index-register.html"><img src="{% static 'images/logo.png' %}" alt="logo" /></a>
+          <a class="navbar-brand" href=" {% url 'index' %} "><img src="{% static 'images/logo.png' %}" alt="logo" /></a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -60,6 +60,38 @@
   {% block javascript %}
   <script src="{% static 'js/jquery-3.1.1.min.js' %}"></script>
   <script>
+    $(".confirm_friend").click(function (e) { 
+      e.preventDefault();
+      var conf=$(this).attr('confirm_friend_this');
+  
+      $.ajax({
+        type: "POST",
+        url: "/confirmfriend",
+        data: "confirm_id="+conf+"&confirmfriend=yes",
+        success: function (response) {
+          alert(response.msg);
+        }
+      });
+      
+
+    });
+
+    $(".addfriend").click(function (e) { 
+      e.preventDefault();
+      var to=$(this).attr('add_this');
+      var from='{{ myInfo.id }}';
+
+      $.ajax({
+        type: "POST",
+        url: "/addfriend",
+        data: "from="+from+"&to="+to+"&addfriend=yes",
+        success: function (response) {
+          alert(response.msg);
+        }
+      });
+
+    });
+
     $("#comment").keyup(function (e) { 
 
       if(e.keyCode==13){
@@ -85,11 +117,13 @@
         url: "/postlike",
         data: "id="+postlike,
         success: function (response) {
-          $(".lP").load('postlike?id='+postlike);
+          if(response.response){
+            //some works tobe done on like button
+          }
         }
       });
     });
-
+/*
     $(document).ready(function () {
       $(window).scroll(function () {
 
@@ -121,11 +155,12 @@
           
                           }
                       });
-                */
+                
         }
       });
 
     });
+*/
   </script>
   <script src="{% static 'js/bootstrap.min.js' %}"></script>
   <script type="text/javascript">
@@ -146,6 +181,8 @@
   <script src="{% static 'js/jquery.appear.min.js' %}"></script>
   <script src="{% static 'js/jquery.incremental-counter.js' %}"></script>
   <script src="{% static 'js/script.js' %}"></script>
+  <script src="{% static 'js/script.js' %}"></script>
+  <script src=" {% static 'js/mmc-chat.js' %} "></script>
   {% endblock javascript %}
 </body>
 
