@@ -1,6 +1,4 @@
 # Fikido
-Access web Here 
-visit web here 
 
 
 PLEASE STAR MY REPOSITORY IF YOU LIKE THIS, SO THAT I WILL ADD MORE FEATURES 
